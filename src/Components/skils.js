@@ -170,11 +170,13 @@ const SkilsList = (props) => {
 
                         </td>
                     </tr>
+
                     )}
+                    {formData.length == 0 && <tr><td colSpan={3} className='text-center'>No Records Found</td></tr>}
 
                 </tbody>
             </Table>
-            <Button variant="outline-primary" className='col-12' size="sm" onClick={addRow}>Add Skill</Button>
+            <Button variant="outline-primary" className='col-7 bottom-0 position-absolute btn btn-outline-primary btn-sm' size="sm" onClick={addRow}>Add Skill</Button>
         </>
     )
 }
