@@ -1,0 +1,17 @@
+.profile-menu {
+    width: 28%;
+    border: 1px solid #CCC;
+    margin: 15px;
+    border-radius: 15px;
+}
+
+.profile-menu>.card {
+    margin: 15px;
+    border-radius: 25px;
+}
+
+.skill-list {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
