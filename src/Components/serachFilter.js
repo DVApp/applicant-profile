@@ -3,10 +3,11 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
 const SearchFilter = ({ onChange, type }) => {
+    const typeValue = type ? (type == "rating" ? "2" : "1") : ""
     return (
         <Row className='mb-2'>
             <Col>
-                <Form.Select onChange={onChange} name='type'
+                <Form.Select value={typeValue} onChange={onChange} name='type'
                     size="sm">
                     <option>Select Type</option>
                     <option value="1">Skill</option>

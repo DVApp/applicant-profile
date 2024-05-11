@@ -13,13 +13,13 @@ const SkilsList = (props) => {
     const [formData, setFormData] = useState([])
     const [filterType, setFilterType] = useState()
 
-    const { saveData } = props
+    const { saveData, checkValid } = props
 
+    /** Remove row */
     const remove = (index) => {
         formData.splice(index, 1)
         setFormData([...formData])
         saveData(formData)
-
     }
 
     useEffect(() => {
@@ -27,9 +27,19 @@ const SkilsList = (props) => {
         setFormData([...setSkills])
     }, [])
 
+    /** validating formData   */
+    useEffect(() => {
+        if (!filterType) checkValid(formData)
+    }, [formData])
+
+    /** Add new row */
     const addRow = (data) => {
         setFormData([...formData, { skill: '', rating: '', isApply: true }])
+        setFilterType("")
+
     }
+
+    /** Set values on form fields */
     const handleChange = (e, index) => {
         const { name, value } = e.target;
         const list = [...formData];
@@ -38,7 +48,7 @@ const SkilsList = (props) => {
 
     }
 
-
+    /** Validation on Fields */
     const validateForm = (formData, index) => {
         let errors = [];
         if (!formData[index].skill.trim()) {
@@ -50,6 +60,7 @@ const SkilsList = (props) => {
         return errors
     }
 
+    /** Button actions on skill table */
     const buttonActions = (type, index) => {
         const newErrors = validateForm(formData, index);
         setErrors(newErrors);
@@ -82,6 +93,7 @@ const SkilsList = (props) => {
 
     }
 
+    /** Serach Filter by type */
     const getFilterData = (e) => {
 
         if (e.target.name === 'type') {
@@ -101,7 +113,6 @@ const SkilsList = (props) => {
 
         }
     }
-
 
     return (
         <>

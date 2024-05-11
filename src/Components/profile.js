@@ -10,6 +10,7 @@ const Profiles = () => {
     const [isModalShow, setModalShow] = useState(false);
     const [imageData, setImageData] = useState([]);
     const [index, setIndex] = useState(0)
+    
     const close = (data) => {
         setModalShow(data)
     }
@@ -33,11 +34,11 @@ const Profiles = () => {
         setImageData([...imageData])
     }, [userData])
 
+    /** Edit profile popup action */
     const editProfile = (data, index) => {
         setModalShow(true);
         setIndex(index)
         setUserData(data)
-        //setProfile(data)
     }
 
     return (

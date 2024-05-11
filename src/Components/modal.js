@@ -4,25 +4,57 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import SkilsList from './skils';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProfileContext } from '../App';
 
 function ProfileModal(props) {
     const { setUserData, userData } = useContext(ProfileContext);
+    const [isDisable, setDisable] = useState(true)
     const { show, closePopup } = props
     const [skliList, applySkills] = useState([])
 
+    /** Close modal */
     const handleClose = () => {
         closePopup(false)
     }
+
+    useEffect(() => {
+        if (userData && userData.list.length == 0)
+            setDisable(true)
+        else if (skliList.length == 0)
+            setDisable(true)
+        else
+            setDisable(false)
+    }, [props])
+
+    /** disabled save changes button based on skils data  */
+    const formValidate = (formData) => {
+        const checkValidate = formData.some((item) => { return item.skil == "" || item.rating == "" })
+        if (checkValidate) {
+            setDisable(true)
+        } else if (skliList.length == 0) {
+            setDisable(true)
+        } else if (formData.length !== skliList.length) {
+            setDisable(true)
+        } else {
+            setDisable(false)
+        }
+
+    }
+
+    /** Apply functionality */
     const getData = (data) => {
+        setDisable(false)
         applySkills(data)
     }
-   
+
+    /** Save changes functionality */
     const saveSkills = () => {
         closePopup(false)
-        setUserData([...skliList])
+        userData.list = skliList
+        setUserData(userData)
     }
+
     return (
         <>
             <Modal show={show} onHide={handleClose} size='lg' backdrop='static'>
@@ -32,7 +64,7 @@ function ProfileModal(props) {
                             <Col xs={4}><img alt='Avatar' style={{ width: '100%', height: '100%' }} variant="top" src={userData.avatar} /></Col>
                             <Col xs={8}>
 
-                                <SkilsList saveData={getData} ></SkilsList>
+                                <SkilsList checkValid={formValidate} saveData={getData} ></SkilsList>
 
                             </Col>
                         </Row>
@@ -40,10 +72,10 @@ function ProfileModal(props) {
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => handleClose()}>
+                    <Button variant="danger" onClick={() => handleClose()}>
                         Close
                     </Button>
-                    <Button variant="primary" className={skliList.length === 0 ? 'disabled' : ''} disabled={skliList.length === 0} onClick={() => saveSkills()}>
+                    <Button variant="primary" className={isDisable ? 'disabled' : ''} disabled={isDisable} onClick={() => saveSkills()}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
