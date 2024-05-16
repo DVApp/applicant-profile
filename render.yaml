@@ -1,0 +1,9 @@
+# Exported from Render on 2024-05-16T11:25:55Z
+services:
+- type: web
+  name: applicant-profile
+  runtime: static
+  repo: https://github.com/DVApp/applicant-profile
+  buildCommand: npm run build
+  staticPublishPath: build
+version: "1"
